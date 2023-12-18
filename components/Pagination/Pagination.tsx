@@ -3,11 +3,15 @@
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Pagination } from '@mantine/core';
 
-export default function ArticlePagination(props: any) {
+export default function ArticlePagination({
+  meta,
+}: {
+  meta: { hits: number; offset: number; time: number };
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const currentPage = meta.offset / 10 + 1;
   const { replace } = useRouter();
-  const currentPage = Number(searchParams.get('page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -15,10 +19,9 @@ export default function ArticlePagination(props: any) {
     return `${pathname}?${params.toString()}`;
   };
 
-  const total = props.data.hits / 10 + 1;
   return (
     <Pagination
-      total={total}
+      total={meta.hits / 10 + 1}
       value={currentPage}
       onChange={(value: number) => {
         replace(createPageURL(value));

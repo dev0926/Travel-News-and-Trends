@@ -2,6 +2,7 @@
 
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
 import classes from './ArticlesCardsGrid.module.css';
+import { Article } from './types';
 
 function getFormattedDate(pub_date: string) {
   const date: Date = new Date(pub_date);
@@ -14,8 +15,8 @@ function getFormattedDate(pub_date: string) {
   return formattedDate;
 }
 
-export function ArticlesCardsGrid(props: any) {
-  const nyCards = props.data.map((article: any) => (
+export function ArticlesCardsGrid({ data }: { data: Array<Article> }) {
+  const nyCards = data.map((article: Article) => (
     <Card
       key={article.headline.main}
       p="md"

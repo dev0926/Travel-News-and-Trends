@@ -3,10 +3,11 @@ import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { ArticlesCardsGrid } from '@/components/ArticlesCardsGrid/ArticlesCardsGrid';
 import ArticlePagination from '@/components/Pagination/Pagination';
+import { SearchInput } from '@/components/SearchInput/SearchInput';
 
-async function getData(pageNumber: number) {
+async function getData(query: string, pageNumber: number) {
   const res = await fetch(
-    `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=section_name:("Travel")&q=aviation&page=${pageNumber}&sort=newest&api-key=${process.env.API_KEY}`
+    `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=section_name:("Travel")&q=${query}&page=${pageNumber}&sort=newest&api-key=${process.env.API_KEY}`
   );
 
   if (!res.ok) {
@@ -21,16 +22,20 @@ export default async function HomePage({
 }: {
   searchParams?: { query?: string; page?: string };
 }) {
-  const currentPage = Number(searchParams?.page) || 0;
-  const data = await getData(currentPage - 1);
+  const currentPage = Number(searchParams?.page) || 1;
+  const currentQuery = searchParams?.query || 'aviation';
+  const data = await getData(currentQuery, currentPage - 1);
 
   return (
     <>
       <Welcome />
       <ColorSchemeToggle />
+      <Center mt="lg">
+        <SearchInput placeholder="Search Articles" />
+      </Center>
       <ArticlesCardsGrid data={data.response.docs} />
       <Center pb="lg">
-        <ArticlePagination data={data.response.meta} />
+        <ArticlePagination meta={data.response.meta} />
       </Center>
     </>
   );

@@ -7,7 +7,7 @@ export function Welcome() {
       <Title className={classes.title} ta="center" mt={50}>
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }}>
-          Aviation News
+          Travel News
         </Text>
       </Title>
     </>
