@@ -3,8 +3,19 @@
 import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
 import classes from './ArticlesCardsGrid.module.css';
 
+function getFormattedDate(pub_date: string) {
+  const date: Date = new Date(pub_date);
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+  const formattedDate: string = new Intl.DateTimeFormat('en-US', options)
+    .format(date)
+    .toUpperCase();
+
+  return formattedDate;
+}
+
 export function ArticlesCardsGrid(props: any) {
-  const nyCards = props.data.response.docs.map((article: any) => (
+  const nyCards = props.data.map((article: any) => (
     <Card
       key={article.headline.main}
       p="md"
@@ -17,14 +28,13 @@ export function ArticlesCardsGrid(props: any) {
       <AspectRatio ratio={1920 / 1080}>
         <Image
           src={
-            {
-              /* 'https://static01.nyt.com/'*/
-            } + article.multimedia[0]?.url
+            /* 'https://static01.nyt.com/'*/
+            article.multimedia[0]?.url
           }
         />
       </AspectRatio>
       <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {article.pub_date}
+        {getFormattedDate(article.pub_date)}
       </Text>
       <Text className={classes.title} mt={5}>
         {article.headline.main}
@@ -34,7 +44,6 @@ export function ArticlesCardsGrid(props: any) {
 
   return (
     <Container py="xl">
-      {/* <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid> */}
       <SimpleGrid cols={{ base: 1, sm: 2 }}>{nyCards}</SimpleGrid>
     </Container>
   );
