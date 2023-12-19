@@ -2,7 +2,7 @@
 
 import { AspectRatio, Card, Image, Skeleton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Article } from '../types';
+import { Article } from '../../../lib/types';
 import classes from './ArticleCard.module.css';
 import { ArticleModal } from '../ArticleModal/ArticleModal';
 

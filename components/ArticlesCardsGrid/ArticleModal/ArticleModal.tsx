@@ -12,7 +12,7 @@ import {
   AspectRatio,
 } from '@mantine/core';
 import classes from './ArticleModal.module.css';
-import { Article, Keyword } from '../types';
+import { Article, Keyword } from '../../../lib/types';
 
 export function ArticleModal({
   article,
