@@ -19,7 +19,7 @@ export function SearchInput(props: TextInputProps) {
       params.delete('query');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  }, 200);
   return (
     <TextInput
       radius="xl"

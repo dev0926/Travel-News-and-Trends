@@ -1,8 +1,7 @@
-'use client';
-
-import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
+import { SimpleGrid, Card, Image, Text, Container, AspectRatio, Skeleton } from '@mantine/core';
 import classes from './ArticlesCardsGrid.module.css';
 import { Article } from './types';
+import { fetchArticleData } from '@/lib/data';
 
 function getFormattedDate(pub_date: string) {
   const date: Date = new Date(pub_date);
@@ -15,8 +14,16 @@ function getFormattedDate(pub_date: string) {
   return formattedDate;
 }
 
-export function ArticlesCardsGrid({ data }: { data: Array<Article> }) {
-  const nyCards = data.map((article: Article) => (
+export async function ArticlesCardsGrid({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) {
+  const data = await fetchArticleData(query, currentPage);
+  const articleData: Array<Article> = data.response.docs;
+  const nyCards = articleData.map((article: Article) => (
     <Card
       key={article.headline.main}
       p="md"
@@ -27,12 +34,11 @@ export function ArticlesCardsGrid({ data }: { data: Array<Article> }) {
       target="blank"
     >
       <AspectRatio ratio={1920 / 1080}>
-        <Image
-          src={
-            /* 'https://static01.nyt.com/'*/
-            article.multimedia[0]?.url
-          }
-        />
+        {article.multimedia[0]?.url ? (
+          <Image src={`https://static01.nyt.com/${article.multimedia[0]?.url}`} />
+        ) : (
+          <Skeleton />
+        )}
       </AspectRatio>
       <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
         {getFormattedDate(article.pub_date)}

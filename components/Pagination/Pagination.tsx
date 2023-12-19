@@ -3,11 +3,7 @@
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Pagination } from '@mantine/core';
 
-export default function ArticlePagination({
-  meta,
-}: {
-  meta: { hits: number; offset: number; time: number };
-}) {
+export function MyPagination({ meta }: { meta: { hits: number; offset: number; time: number } }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = meta.offset / 10 + 1;

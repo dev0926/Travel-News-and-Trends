@@ -1,21 +1,11 @@
 import { Center } from '@mantine/core';
+import { Suspense } from 'react';
 import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { ArticlesCardsGrid } from '@/components/ArticlesCardsGrid/ArticlesCardsGrid';
-import ArticlePagination from '@/components/Pagination/Pagination';
+import { ArticlesCardsGridSkeleton } from '@/components/ArticlesCardsGrid/ArticlesCardsGridSkeleton';
+import { ArticlePagination } from '@/components/Pagination/ArticlePagination';
 import { SearchInput } from '@/components/SearchInput/SearchInput';
-
-async function getData(query: string, pageNumber: number) {
-  const res = await fetch(
-    `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=section_name:("Travel")&q=${query}&page=${pageNumber}&sort=newest&api-key=${process.env.API_KEY}`
-  );
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return res.json();
-}
 
 export default async function HomePage({
   searchParams,
@@ -23,8 +13,7 @@ export default async function HomePage({
   searchParams?: { query?: string; page?: string };
 }) {
   const currentPage = Number(searchParams?.page) || 1;
-  const currentQuery = searchParams?.query || 'aviation';
-  const data = await getData(currentQuery, currentPage - 1);
+  const query = searchParams?.query || 'aviation';
 
   return (
     <>
@@ -33,9 +22,11 @@ export default async function HomePage({
       <Center mt="lg">
         <SearchInput placeholder="Search Articles" />
       </Center>
-      <ArticlesCardsGrid data={data.response.docs} />
+      <Suspense key={query + currentPage} fallback={<ArticlesCardsGridSkeleton />}>
+        <ArticlesCardsGrid query={query} currentPage={currentPage} />
+      </Suspense>
       <Center pb="lg">
-        <ArticlePagination meta={data.response.meta} />
+        <ArticlePagination query={query} currentPage={currentPage} />
       </Center>
     </>
   );
