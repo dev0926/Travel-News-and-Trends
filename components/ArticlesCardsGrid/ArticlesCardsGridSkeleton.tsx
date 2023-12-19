@@ -1,4 +1,4 @@
-import { SimpleGrid, Card, Text, Container, AspectRatio, Skeleton } from '@mantine/core';
+import { SimpleGrid, Card, Container, AspectRatio, Skeleton } from '@mantine/core';
 import classes from './ArticlesCardsGrid.module.css';
 
 const mockdata = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -9,13 +9,9 @@ export function ArticlesCardsGridSkeleton() {
       <AspectRatio ratio={1920 / 1080}>
         <Skeleton />
       </AspectRatio>
-      <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        <Skeleton height={16} radius="xl" width="40%" />
-      </Text>
-      <Text className={classes.title} mt={5}>
-        <Skeleton height={16} radius="xl" width="90%" />
-        <Skeleton height={16} mt={4} radius="xl" width="60%" />
-      </Text>
+      <Skeleton height={16} mt="md" radius="xl" width="40%" />
+      <Skeleton height={16} mt={5} radius="xl" width="90%" />
+      <Skeleton height={16} mt={4} radius="xl" width="60%" />
     </Card>
   ));
 

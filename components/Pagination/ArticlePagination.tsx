@@ -1,6 +1,7 @@
 import { Center } from '@mantine/core';
 import { fetchPaginationData } from '@/lib/data';
 import { MyPagination } from './Pagination';
+import { FailNotification } from '../Notification/Notifications';
 
 export async function ArticlePagination({
   query,
@@ -10,9 +11,11 @@ export async function ArticlePagination({
   currentPage: number;
 }) {
   const data = await fetchPaginationData(query, currentPage);
-  return (
-    <Center pb="lg">
-      <MyPagination meta={data.response.meta} />
-    </Center>
-  );
+  let show;
+  if (data === false) {
+    show = <FailNotification />;
+  } else {
+    show = <MyPagination meta={data.response.meta} />;
+  }
+  return <Center pb="lg">{show}</Center>;
 }

@@ -6,7 +6,7 @@ export async function fetchArticleData(query: string, pageNumber: number) {
   );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    return false;
   }
 
   return res.json();
@@ -20,7 +20,7 @@ export async function fetchPaginationData(query: string, pageNumber: number) {
   );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    return false;
   }
 
   return res.json();
