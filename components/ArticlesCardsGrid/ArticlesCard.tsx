@@ -1,9 +1,10 @@
 'use client';
 
-import { AspectRatio, Card, Image, Skeleton, Text, Modal } from '@mantine/core';
+import { AspectRatio, Card, Image, Skeleton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Article } from './types';
 import classes from './ArticlesCardsGrid.module.css';
+import { ArticleModal } from './ArticleModal/ArticleModal';
 
 function getFormattedDate(pub_date: string) {
   const date: Date = new Date(pub_date);
@@ -20,9 +21,7 @@ export default function ArticlesCard({ article }: { article: Article }) {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Authentication" centered>
-        {/* Modal content */}
-      </Modal>
+      <ArticleModal article={article} opened={opened} close={close} />
       <Card
         key={article.headline.main}
         p="md"

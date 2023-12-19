@@ -32,6 +32,8 @@ export interface Article {
   word_count: number;
 
   uri: string;
+
+  lead_paragraph: string;
 }
 
 interface Multimedia {
@@ -78,7 +80,7 @@ interface Headline {
   sub: string;
 }
 
-interface Keyword {
+export interface Keyword {
   name: string;
 
   value: string;
