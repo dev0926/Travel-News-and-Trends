@@ -1,4 +1,7 @@
-import { AspectRatio, Card, Image, Skeleton, Text } from '@mantine/core';
+'use client';
+
+import { AspectRatio, Card, Image, Skeleton, Text, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Article } from './types';
 import classes from './ArticlesCardsGrid.module.css';
 
@@ -14,29 +17,34 @@ function getFormattedDate(pub_date: string) {
 }
 
 export default function ArticlesCard({ article }: { article: Article }) {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <Card
-      key={article.headline.main}
-      p="md"
-      radius="md"
-      component="a"
-      href={article.web_url}
-      className={classes.card}
-      target="blank"
-    >
-      <AspectRatio ratio={1920 / 1080}>
-        {article.multimedia[0]?.url ? (
-          <Image src={`https://static01.nyt.com/${article.multimedia[0]?.url}`} />
-        ) : (
-          <Skeleton />
-        )}
-      </AspectRatio>
-      <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {getFormattedDate(article.pub_date)}
-      </Text>
-      <Text className={classes.title} mt={5}>
-        {article.headline.main}
-      </Text>
-    </Card>
+    <>
+      <Modal opened={opened} onClose={close} title="Authentication" centered>
+        {/* Modal content */}
+      </Modal>
+      <Card
+        key={article.headline.main}
+        p="md"
+        radius="md"
+        component="div"
+        className={classes.card}
+        onClick={open}
+      >
+        <AspectRatio ratio={1920 / 1080}>
+          {article.multimedia[0]?.url ? (
+            <Image src={`https://static01.nyt.com/${article.multimedia[0]?.url}`} />
+          ) : (
+            <Skeleton />
+          )}
+        </AspectRatio>
+        <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
+          {getFormattedDate(article.pub_date)}
+        </Text>
+        <Text className={classes.title} mt={5}>
+          {article.headline.main}
+        </Text>
+      </Card>
+    </>
   );
 }
