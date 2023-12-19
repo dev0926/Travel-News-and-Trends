@@ -1,7 +1,7 @@
 import { SimpleGrid, Container } from '@mantine/core';
 import { Article } from './types';
 import { fetchArticleData } from '@/lib/data';
-import ArticlesCard from './ArticlesCard';
+import ArticlesCard from './ArticleCard/ArticleCard';
 import { FailNotification } from '../Notification/Notifications';
 
 export async function ArticlesCardsGrid({

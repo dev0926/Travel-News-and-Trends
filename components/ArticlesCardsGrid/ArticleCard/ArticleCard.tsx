@@ -2,9 +2,9 @@
 
 import { AspectRatio, Card, Image, Skeleton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Article } from './types';
-import classes from './ArticlesCardsGrid.module.css';
-import { ArticleModal } from './ArticleModal/ArticleModal';
+import { Article } from '../types';
+import classes from './ArticleCard.module.css';
+import { ArticleModal } from '../ArticleModal/ArticleModal';
 
 function getFormattedDate(pub_date: string) {
   const date: Date = new Date(pub_date);
